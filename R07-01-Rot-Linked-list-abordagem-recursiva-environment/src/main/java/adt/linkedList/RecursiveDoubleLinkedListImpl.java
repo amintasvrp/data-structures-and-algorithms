@@ -18,18 +18,9 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 	public void insertFirst(T element) {
 		if (element != null) {
 			if (isEmpty()) {
-				setData(element);
-				RecursiveDoubleLinkedListImpl<T> nextNIL = new RecursiveDoubleLinkedListImpl<T>();
-				setNext(nextNIL);
-				nextNIL.setPrevious(this);
-				RecursiveDoubleLinkedListImpl<T> prevNIL = new RecursiveDoubleLinkedListImpl<T>();
-				setPrevious(prevNIL);
-				prevNIL.setNext(this);
+				insert(element);
 			} else {
-				RecursiveDoubleLinkedListImpl<T> nextNode = new RecursiveDoubleLinkedListImpl<T>(getData(), getNext(),
-						this);
-				setData(element);
-				setNext(nextNode);
+				setPrevious(new RecursiveDoubleLinkedListImpl<T>(element, this, new RecursiveDoubleLinkedListImpl<T>()));
 			}
 		}
 	}

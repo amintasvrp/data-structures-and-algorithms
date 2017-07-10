@@ -42,33 +42,24 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	public void insert(T element) {
 		if (element != null) {
 			SingleLinkedListNode<T> auxHead = getHead();
-			if (head.isNIL()) {
-				SingleLinkedListNode<T> newHead = new SingleLinkedListNode<T>(element, head);
-				head = newHead;
-			} else {
-				while (!(auxHead.getNext().isNIL())) {
-					auxHead = auxHead.getNext();
-				}
-				SingleLinkedListNode<T> newNode = new SingleLinkedListNode<T>(element, auxHead.getNext());
-				auxHead.setNext(newNode);
+			while (!auxHead.isNIL()) {
+				auxHead = auxHead.getNext();
 			}
+			auxHead.setData(element);
+			auxHead.setNext(new SingleLinkedListNode<T>());
 		}
 
 	}
 
 	@Override
 	public void remove(T element) {
-		if (getHead().getData().equals(element)) {
-			head = head.getNext();
-		} else {
-			SingleLinkedListNode<T> auxNode = head;
-			SingleLinkedListNode<T> prevNode = null;
-			while (!(auxNode.isNIL()) && !(auxNode.getData().equals(element))) {
-				prevNode = auxNode;
-				auxNode = auxNode.getNext();
+		if (!getHead().isNIL()) {
+			SingleLinkedListNode<T> auxHead = getHead();
+			while (!auxHead.getNext().isNIL() && !auxHead.getNext().getData().equals(element)) {
+				auxHead = auxHead.getNext();
 			}
-			if (!(auxNode.isNIL())) {
-				prevNode.setNext(auxNode.getNext());
+			if (!auxHead.getNext().isNIL()) {
+				auxHead.setNext(auxHead.getNext().getNext());
 			}
 		}
 	}

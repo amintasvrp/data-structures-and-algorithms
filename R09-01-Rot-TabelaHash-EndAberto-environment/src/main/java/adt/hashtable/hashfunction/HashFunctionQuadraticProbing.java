@@ -1,7 +1,5 @@
 package adt.hashtable.hashfunction;
 
-import adt.hashtable.Hashtable;
-
 public class HashFunctionQuadraticProbing<T> implements
 		HashFunctionOpenAddress<T> {
 
