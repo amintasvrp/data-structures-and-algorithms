@@ -24,7 +24,7 @@ public class StudentBSTTest {
 	public void setUp() {
 		tree = new BSTImpl<>();
 	}
-	
+
 	@Test
 	public void testSize() {
 		fillTree(); // -40 -34 0 2 5 6 9 12 23 67 76 232
@@ -107,14 +107,11 @@ public class StudentBSTTest {
 		assertEquals(new Integer(5), tree.sucessor(2).getData());
 	}
 
-	
-
 	@Test
 	public void testHeight() {
 		fillTree(); // -40 -34 0 2 5 6 9 12 23 67 76 232
 
-		Integer[] preOrder = new Integer[] { 6, -34, -40, 5, 2, 0, 23, 9, 12,
-				76, 67, 232 };
+		Integer[] preOrder = new Integer[] { 6, -34, -40, 5, 2, 0, 23, 9, 12, 76, 67, 232 };
 		assertArrayEquals(preOrder, tree.preOrder());
 		assertEquals(4, tree.height());
 
@@ -153,5 +150,37 @@ public class StudentBSTTest {
 		assertEquals(new Integer(-40), tree.search(-40).getData());
 		assertEquals(new Integer(-34), tree.search(-34).getData());
 		assertEquals(NIL, tree.search(2534));
+	}
+
+	@Test
+	public void testLevel() {
+		fillTree();
+		Integer[] level = new Integer[] { -40, 5, 9, 76 };
+
+		assertArrayEquals(level, tree.arrayLevel(2));
+
+		level = new Integer[] { 2, 12, 67, 232 };
+
+		assertArrayEquals(level, tree.arrayLevel(3));
+
+		level = new Integer[] { 0 };
+
+		assertArrayEquals(level, tree.arrayLevel(4));
+	}
+
+	@Test
+	public void testDistance() {
+		fillTree();
+		assertEquals(4, tree.distance(-40, 76));
+		assertEquals(2, tree.distance(232, 23));
+		assertEquals(6, tree.distance(67, 2));
+		assertEquals(5, tree.distance(0, 23));
+		assertEquals(0, tree.distance(5, 5));
+		assertEquals(5, tree.distance(12, 5));
+		assertEquals(6, tree.distance(2, 232));
+		assertEquals(1, tree.distance(12, 9));
+		assertEquals(4, tree.distance(76, -40)); // nao existe
+		assertEquals(-1, tree.distance(-50, 6));
+		assertEquals(-1, tree.distance(6, -50));
 	}
 }
