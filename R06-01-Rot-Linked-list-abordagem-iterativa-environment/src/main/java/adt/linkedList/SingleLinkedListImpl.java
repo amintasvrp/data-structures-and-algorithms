@@ -10,11 +10,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public boolean isEmpty() {
-		if (head.isNIL()) {
-			return true;
-		} else {
-			return false;
-		}
+		return head.isNIL();
 	}
 
 	@Override
@@ -30,12 +26,15 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public T search(T element) {
-		SingleLinkedListNode<T> node = getHead();
-		while (!(node.isNIL()) && !(node.getData().equals(element))) {
-			node = node.getNext();
+		T result = null;
+		if (element != null) {
+			SingleLinkedListNode<T> node = getHead();
+			while (!(node.isNIL()) && !(node.getData().equals(element))) {
+				node = node.getNext();
+			}
+			result = node.getData();
 		}
-		T result = node.getData();
-		return result;		
+		return result;
 	}
 
 	@Override
@@ -53,13 +52,15 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public void remove(T element) {
-		if (!getHead().isNIL()) {
-			SingleLinkedListNode<T> auxHead = getHead();
-			while (!auxHead.getNext().isNIL() && !auxHead.getNext().getData().equals(element)) {
-				auxHead = auxHead.getNext();
-			}
-			if (!auxHead.getNext().isNIL()) {
-				auxHead.setNext(auxHead.getNext().getNext());
+		if (element != null) {
+			if (!getHead().isNIL()) {
+				SingleLinkedListNode<T> auxHead = getHead();
+				while (!auxHead.getNext().isNIL() && !auxHead.getNext().getData().equals(element)) {
+					auxHead = auxHead.getNext();
+				}
+				if (!auxHead.getNext().isNIL()) {
+					auxHead.setNext(auxHead.getNext().getNext());
+				}
 			}
 		}
 	}

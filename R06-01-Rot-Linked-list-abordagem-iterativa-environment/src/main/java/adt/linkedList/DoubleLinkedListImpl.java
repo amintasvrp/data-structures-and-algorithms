@@ -12,14 +12,16 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements 
 
 	@Override
 	public void insertFirst(T element) {
-		nil = new DoubleLinkedListNode<T>();
-		DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, (DoubleLinkedListNode<T>) getHead(),
-				nil);
-		((DoubleLinkedListNode<T>) getHead()).setPrevious(newHead);
-		if (newHead.isNIL()) {
-			setLast(newHead);
+		if (element != null) {
+			nil = new DoubleLinkedListNode<T>();
+			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, (DoubleLinkedListNode<T>) getHead(),
+					nil);
+			((DoubleLinkedListNode<T>) getHead()).setPrevious(newHead);
+			if (newHead.isNIL()) {
+				setLast(newHead);
+			}
+			setHead(newHead);
 		}
-		setHead(newHead);
 	}
 
 	@Override
