@@ -1,5 +1,9 @@
 package adt.bst;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
 public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	protected BSTNode<T> node;
@@ -280,6 +284,67 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 			postOrderRecursive((BSTNode<T>) node.getRight(), array);
 			add(array, node.getData());
 		}
+	}
+
+	public T[] arrayLevel(int level) {
+		T[] result = null;
+		if (level > 0 && level <= getHeight(getRoot())) {
+			LinkedList<T> list = arrayLevel(getRoot(), new LinkedList<T>(), level);
+			result = makeArrayFromList(list);
+
+		}
+		return result;
+	}
+
+	private LinkedList<T> arrayLevel(BSTNode<T> node, LinkedList<T> list, int level) {
+
+		if (level >= 0 && !node.isEmpty()) {
+			arrayLevel((BSTNode<T>) node.getLeft(), list, level - 1);
+			if (level == 0) {
+				list.add(node.getData());
+			}
+			arrayLevel((BSTNode<T>) node.getRight(), list, level - 1);
+		}
+
+		return list;
+	}
+
+	protected T[] makeArrayFromList(List<T> list) {
+
+		int size = list.size();
+		T[] array = util.Util.makeArrayOfComparable(size);
+		for (int i = 0; i != size; i++) {
+			array[i] = list.get(i);
+		}
+		return array;
+	}
+
+	public int distance(T value1, T value2) {
+		int distance = -1;
+		BSTNode<T> node1 = this.search(value1);
+		if (!node1.isEmpty()) {
+			BSTNode<T> node2 = this.search(value2);
+			if (!node2.isEmpty()) {
+				Stack<BSTNode<T>> pilha1, pilha2;
+				pilha1 = toArrayParent(node1);
+				pilha2 = toArrayParent(node2);
+				while (!pilha1.isEmpty() && !pilha2.isEmpty() && pilha1.peek().equals(pilha2.peek())) {
+					pilha1.pop();
+					pilha2.pop();
+				}
+				distance = pilha1.size() + pilha2.size();
+			}
+		}
+		return distance;
+	}
+
+	private Stack<BSTNode<T>> toArrayParent(BSTNode<T> node) {
+		Stack<BSTNode<T>> pilha = new Stack<BSTNode<T>>();
+		while (node.getParent() != null) {
+			pilha.push(node);
+			node = (BSTNode<T>) node.getParent();
+		}
+		return pilha;
 	}
 
 	/**
