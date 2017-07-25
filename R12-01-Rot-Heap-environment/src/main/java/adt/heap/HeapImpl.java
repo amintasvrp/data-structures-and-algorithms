@@ -81,14 +81,12 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	 * (comparados usando o comparator) elementos na parte de cima da heap.
 	 */
 	private void heapify(int position) {
-		if (position < size()) {
-			int largest;
+		if (position >= 0 && position < size()) {
+			int largest = position;
 			int leftChild = left(position);
 			int rightChild = right(position);
 			if (leftChild < size() && getComparator().compare(heap[leftChild], heap[position]) > 0) {
 				largest = leftChild;
-			} else {
-				largest = position;
 			}
 			if (rightChild < size() && getComparator().compare(heap[rightChild], heap[largest]) > 0) {
 				largest = rightChild;
@@ -120,9 +118,10 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	@Override
 	public void buildHeap(T[] array) {
-		index = array.length - 1;
-		heap = array;
-		if (size() > 0) {
+		if (array.length > 0) {
+			for (int i = 0; i < array.length; i++) {
+				insert(array[i]);
+			}
 			for (int i = (index) / 2; i >= 0; i--) {
 				heapify(i);
 			}
