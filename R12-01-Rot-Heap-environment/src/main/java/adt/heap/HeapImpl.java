@@ -85,10 +85,10 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 			int largest = position;
 			int leftChild = left(position);
 			int rightChild = right(position);
-			if (leftChild < size() && getComparator().compare(heap[leftChild], heap[position]) > 0) {
+			if (leftChild < size() && heap[leftChild] != null && getComparator().compare(heap[leftChild], heap[position]) > 0) {
 				largest = leftChild;
 			}
-			if (rightChild < size() && getComparator().compare(heap[rightChild], heap[largest]) > 0) {
+			if (rightChild < size() && heap[rightChild] != null && getComparator().compare(heap[rightChild], heap[largest]) > 0) {
 				largest = rightChild;
 			}
 			if (getComparator().compare(heap[largest], heap[position]) != 0) {
@@ -100,12 +100,12 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	@Override
 	public void insert(T element) {
+		// ESSE CODIGO E PARA A HEAP CRESCER SE FOR PRECISO. NAO MODIFIQUE
+		if (index == heap.length - 1) {
+			heap = Arrays.copyOf(heap, heap.length + INCREASING_FACTOR);
+		}
+		// /////////////////////////////////////////////////////////////////
 		if (element != null) {
-			// ESSE CODIGO E PARA A HEAP CRESCER SE FOR PRECISO. NAO MODIFIQUE
-			if (index == heap.length - 1) {
-				heap = Arrays.copyOf(heap, heap.length + INCREASING_FACTOR);
-			}
-			// /////////////////////////////////////////////////////////////////
 			index++;
 			int i = index;
 			while (i > 0 && getComparator().compare(heap[parent(i)], element) < 0) {
@@ -113,16 +113,16 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 				i = parent(i);
 			}
 			heap[i] = element;
-		}
+		}			
+		
 	}
 
 	@Override
 	public void buildHeap(T[] array) {
-		if (array.length > 0) {
-			for (int i = 0; i < array.length; i++) {
-				insert(array[i]);
-			}
-			for (int i = (index) / 2; i >= 0; i--) {
+		if (array != null) {
+			heap = array;
+			index = array.length - 1;
+			for (int i = array.length / 2; i >= 0; i--) {
 				heapify(i);
 			}
 		}
@@ -131,7 +131,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	@Override
 	public T extractRootElement() {
 		T result = null;
-		if (size() > 0) {
+		if (!isEmpty()) {
 			result = heap[0];
 			heap[0] = heap[index];
 			index--;
