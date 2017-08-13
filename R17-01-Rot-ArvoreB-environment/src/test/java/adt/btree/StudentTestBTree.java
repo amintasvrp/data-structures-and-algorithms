@@ -54,7 +54,7 @@ public class StudentTestBTree {
 		assertEquals(1, tree1.size());
 	} 
 	 */
-	BTree<Integer> bt;
+	BTreeImpl<Integer> bt;
 
 	    @Before
 	    public void setUp(){
@@ -170,6 +170,29 @@ public class StudentTestBTree {
 			
 			assertEquals(bt.size(), 25);
 			assertEquals(bt.height(), 3);
+		}
+	    
+	    @Test
+		public void testMaximumMinimum() {
+	    	assertEquals(null, bt.maximumElement());
+	    	assertEquals(null, bt.minimumElement());
+	    	bt.insert(10);
+	    	bt.insert(20);
+	    	assertEquals(new Integer(20), bt.maximumElement());
+	    	assertEquals(new Integer(10), bt.minimumElement());
+	    	bt.insert(5);
+	    	assertEquals(new Integer(5), bt.minimumElement());
+	    	assertEquals(new Integer(20), bt.maximumElement());
+			bt.insert(30);
+			assertEquals(new Integer(30), bt.maximumElement());
+			assertEquals(new Integer(5), bt.minimumElement());
+			bt.insert(42);
+			assertEquals(new Integer(42), bt.maximumElement());
+			assertEquals(new Integer(5), bt.minimumElement());
+			bt.insert(1);
+			assertEquals(new Integer(1), bt.minimumElement());
+			bt.insert(0);
+			assertEquals(new Integer(0), bt.minimumElement());
 		} 
 
 }

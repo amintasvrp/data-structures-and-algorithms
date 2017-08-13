@@ -19,8 +19,7 @@ public class RBTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements R
 			if (node.getColour() == Colour.BLACK) {
 				result++;
 			}
-			result += Math.max(blackHeightRecursive((RBNode<T>) node.getLeft()),
-					blackHeightRecursive((RBNode<T>) node.getRight()));
+			result += blackHeightRecursive((RBNode<T>) node.getRight());
 		}
 		return result;
 	}
@@ -33,8 +32,8 @@ public class RBTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements R
 	}
 
 	/**
-	 * The colour of each node of a RB tree is black or red. This is guaranteed
-	 * by the type Colour.
+	 * The colour of each node of a RB tree is black or red. This is guaranteed by
+	 * the type Colour.
 	 */
 	private boolean verifyNodesColour() {
 		return true; // already implemented
@@ -56,8 +55,8 @@ public class RBTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements R
 	}
 
 	/**
-	 * Verifies the property for all RED nodes: the children of a red node must
-	 * be BLACK.
+	 * Verifies the property for all RED nodes: the children of a red node must be
+	 * BLACK.
 	 */
 	private boolean verifyChildrenOfRedNodes() {
 		return verifyChildrenOfRedNodesRecursive((RBNode<T>) getRoot());
@@ -226,5 +225,22 @@ public class RBTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements R
 			}
 			setRoot(nodeAux);
 		}
+	}
+
+	protected int countBlackNodes() {
+		return countBlackNodesRecursive((RBNode<T>) getRoot());
+	}
+
+	private int countBlackNodesRecursive(RBNode<T> node) {
+		int result = 0;
+		if (!(node.isEmpty())) {
+			if (node.getColour() == Colour.BLACK) {
+				result++;
+			}
+			int left = countBlackNodesRecursive((RBNode<T>) node.getLeft());
+			int right = countBlackNodesRecursive((RBNode<T>) node.getRight());
+			result += left + right;
+		}
+		return result;
 	}
 }

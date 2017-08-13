@@ -86,6 +86,10 @@ public class BNode<T extends Comparable<T>> {
 		return this.elements.get(index);
 	}
 
+	public BNode<T> getChildAt(int index) {
+		return this.children.get(index);
+	}
+
 	protected void split() {
 		int mid = (size()) / 2;
 		if (getParent() == null) {

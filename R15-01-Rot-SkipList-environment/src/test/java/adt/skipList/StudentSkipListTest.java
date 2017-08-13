@@ -14,7 +14,7 @@ import adt.skipList.SkipListImpl;
 import adt.skipList.SkipListNode;
 
 public class StudentSkipListTest {
-
+	
 	SkipList<String> skip;
 	SkipListNode<String>[] array;
 
@@ -155,4 +155,59 @@ public class StudentSkipListTest {
 		assertEquals("[<ROOT,4,4>, <NIL,4>]", Arrays.toString(array));
 		assertEquals(Integer.MAX_VALUE, array[0].getForward(0).getKey());
 	}
+	
+	@Test
+    public void testArrayLevel(){
+		SkipListImpl<String> skipList = new SkipListImpl<String>(5);
+        skipList.insert(8, "A", 4);
+        skipList.insert(14, "B", 4);
+        skipList.insert(21, "C", 4);
+        skipList.insert(4, "D", 3);
+        skipList.insert(12, "E", 3);
+        skipList.insert(17, "F", 2);
+        skipList.insert(18, "G", 3);
+        skipList.insert(25, "H", 2);
+        skipList.insert(1, "H", 5);
+       
+        /*
+         * Faça um algoritmo na skip list que imprime os nós da skip list por altura e ordem crescente. Por exemplo,
+            se uam skip list possui nós com altura 4 (8, 14, 21) e nós com altura 3 (4, 12, 18) e nós com altura 2 (17,25):
+            [(4,3),(8,4),(12,3),(14,4),(17,2),(18,3),(21,4),(25,2), imprimiria a sequencia 8,14,21,4,12,18,17,25.
+         */
+       
+        array = skipList.toArrayLevel();
+        assertEquals("[<1,5>, <8,4>, <14,4>, <21,4>, <4,3>, <12,3>, <18,3>, <17,2>, <25,2>]", Arrays.toString(skipList.toArrayLevel()));
+    }
+	
+	@Test
+    public void testChangeLevel(){
+		SkipListImpl<String> skipList = new SkipListImpl<String>(5);
+        skipList.insert(8, "8", 3);
+        skipList.insert(7, "7", 1);
+        skipList.insert(1, "1", 1);
+        skipList.insert(4, "4", 2);
+       
+        skipList.changeHeight(7, 2);
+        array = skipList.toArrayLevel();
+        assertEquals("[<8,3>, <4,2>, <7,2>, <1,1>]", Arrays.toString(array));
+        skipList.changeHeight(7, 1);
+        array = skipList.toArrayLevel();
+        assertEquals("[<8,3>, <4,2>, <1,1>, <7,1>]", Arrays.toString(array));
+       
+        skipList.changeHeight(4, 1);
+        array = skipList.toArrayLevel();
+        assertEquals("[<8,3>, <1,1>, <4,1>, <7,1>]", Arrays.toString(array));
+       
+        skipList.changeHeight(4, 3);
+        array = skipList.toArrayLevel();
+        assertEquals("[<4,3>, <8,3>, <1,1>, <7,1>]", Arrays.toString(array));
+       
+        skipList.changeHeight(8, 1);
+        array = skipList.toArrayLevel();
+        assertEquals("[<4,3>, <1,1>, <7,1>, <8,1>]", Arrays.toString(array));
+       
+        skipList.changeHeight(4, 1);
+        array = skipList.toArrayLevel();
+        assertEquals("[<1,1>, <4,1>, <7,1>, <8,1>]", Arrays.toString(array));
+    }
 }
