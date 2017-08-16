@@ -243,4 +243,23 @@ public class RBTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements R
 		}
 		return result;
 	}
+
+	protected int redNodesCount() {
+		return redNodesCount((RBNode<T>) node);
+	}
+
+	protected int redNodesCount(RBNode<T> node) {
+		int result = 0;
+
+		if (!node.isEmpty()) {
+			if (node.getColour() == Colour.RED) {
+				result++;
+			}
+
+			result += redNodesCount((RBNode<T>) node.getLeft());
+			result += redNodesCount((RBNode<T>) node.getRight());
+		}
+
+		return result;
+	}
 }

@@ -718,5 +718,25 @@ public class StudentTestRBTree {
 		myRB.insert(10);
 		assertEquals(4, myRB.countBlackNodes());
 	}
+	
+	@Test
+	public void testRedCount(){
+		Integer[] preOrder = { 11, 2, 1, 7, 5, 14, 15 };
+		Colour[] preOrderColour = { Colour.BLACK, Colour.RED, Colour.BLACK,
+				Colour.BLACK, Colour.RED, Colour.BLACK, Colour.RED };
+
+		myRB.insert(11);
+		myRB.insert(2);
+		assertEquals(1, myRB.redNodesCount());
+		myRB.insert(14);
+		
+		assertEquals(2, myRB.redNodesCount());
+		myRB.insert(1);
+		myRB.insert(15);
+		myRB.insert(7);
+		myRB.insert(5);
+
+		assertEquals(3, myRB.redNodesCount());
+	}
 
 }

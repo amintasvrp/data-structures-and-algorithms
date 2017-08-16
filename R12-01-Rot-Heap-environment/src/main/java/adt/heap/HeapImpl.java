@@ -2,6 +2,8 @@ package adt.heap;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 import util.Util;
 
@@ -19,10 +21,10 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	protected T[] heap;
 	protected int index = -1;
 	/**
-	 * O comparador é utilizado para fazer as comparações da heap. O ideal é
-	 * mudar apenas o comparator e mandar reordenar a heap usando esse
-	 * comparator. Assim os metodos da heap não precisam saber se vai funcionar
-	 * como max-heap ou min-heap.
+	 * O comparador é utilizado para fazer as comparações da heap. O ideal é mudar
+	 * apenas o comparator e mandar reordenar a heap usando esse comparator. Assim
+	 * os metodos da heap não precisam saber se vai funcionar como max-heap ou
+	 * min-heap.
 	 */
 	protected Comparator<T> comparator;
 
@@ -30,8 +32,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	private static final int INCREASING_FACTOR = 10;
 
 	/**
-	 * Construtor da classe. Note que de inicio a heap funciona como uma
-	 * min-heap.
+	 * Construtor da classe. Note que de inicio a heap funciona como uma min-heap.
 	 */
 	@SuppressWarnings("unchecked")
 	public HeapImpl(Comparator<T> comparator) {
@@ -45,16 +46,16 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	}
 
 	/**
-	 * Deve retornar o indice que representa o filho a esquerda do elemento
-	 * indexado pela posicao i no vetor
+	 * Deve retornar o indice que representa o filho a esquerda do elemento indexado
+	 * pela posicao i no vetor
 	 */
 	private int left(int i) {
 		return (i * 2 + 1);
 	}
 
 	/**
-	 * Deve retornar o indice que representa o filho a direita do elemento
-	 * indexado pela posicao i no vetor
+	 * Deve retornar o indice que representa o filho a direita do elemento indexado
+	 * pela posicao i no vetor
 	 */
 	private int right(int i) {
 		return (i * 2 + 1) + 1;
@@ -76,8 +77,8 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	// ///////////// METODOS A IMPLEMENTAR
 	/**
-	 * Valida o invariante de uma heap a partir de determinada posicao, que pode
-	 * ser a raiz da heap ou de uma sub-heap. O heapify deve colocar os maiores
+	 * Valida o invariante de uma heap a partir de determinada posicao, que pode ser
+	 * a raiz da heap ou de uma sub-heap. O heapify deve colocar os maiores
 	 * (comparados usando o comparator) elementos na parte de cima da heap.
 	 */
 	private void heapify(int position) {
@@ -85,10 +86,12 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 			int largest = position;
 			int leftChild = left(position);
 			int rightChild = right(position);
-			if (leftChild < size() && heap[leftChild] != null && getComparator().compare(heap[leftChild], heap[position]) > 0) {
+			if (leftChild < size() && heap[leftChild] != null
+					&& getComparator().compare(heap[leftChild], heap[position]) > 0) {
 				largest = leftChild;
 			}
-			if (rightChild < size() && heap[rightChild] != null && getComparator().compare(heap[rightChild], heap[largest]) > 0) {
+			if (rightChild < size() && heap[rightChild] != null
+					&& getComparator().compare(heap[rightChild], heap[largest]) > 0) {
 				largest = rightChild;
 			}
 			if (getComparator().compare(heap[largest], heap[position]) != 0) {
@@ -113,8 +116,8 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 				i = parent(i);
 			}
 			heap[i] = element;
-		}			
-		
+		}
+
 	}
 
 	@Override
@@ -185,6 +188,52 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	public T[] getHeap() {
 		return heap;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T[] mergeArrays(T[] arrayA, T[] arrayB) {
+		for (T element : arrayA) {
+			insert(element);
+		}
+		for (T element : arrayB) {
+			insert(element);
+		}
+
+		T[] aux = (T[]) (new Comparable[size()]);
+
+		for (int index = 0; index < aux.length; index++) {
+			aux[index] = extractRootElement();
+		}
+		return aux;
+	}
+
+	public T[] sortLevel(int level) {
+		LinkedList<T> aux = new LinkedList<T>();
+
+		if (level >= 0) {
+			int startLevel = (int) (Math.pow(2, level) - 1);
+			int endLevel = (int) (Math.pow(2, (level + 1)) - 2);
+
+			while (startLevel <= endLevel && heap[startLevel] != null) {
+				aux.add(heap[startLevel]);
+				startLevel++;
+			}
+		}
+
+		T[] result = makeArrayFromList(aux);
+		Arrays.sort(result);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected T[] makeArrayFromList(List<T> list) {
+
+		int size = list.size();
+		T[] array = (T[]) new Comparable[size];
+		for (int i = 0; i != size; i++) {
+			array[i] = list.get(i);
+		}
+		return array;
 	}
 
 }
