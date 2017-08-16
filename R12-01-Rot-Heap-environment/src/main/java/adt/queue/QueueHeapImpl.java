@@ -32,13 +32,15 @@ public class QueueHeapImpl<T extends Comparable<T>> implements Queue<T> {
 
 	@Override
 	public void enqueue(T element) throws QueueOverflowException {
-		if (isFull()) {
-			throw new QueueOverflowException();
+		if (element != null) {
+			if (isFull()) {
+				throw new QueueOverflowException();
+			}
+			HeapNode node = new HeapNode<T>(element, ID);
+			count++;
+			ID++;
+			heap.insert(node);
 		}
-		HeapNode node = new HeapNode<T>(element, ID);
-		count++;
-		ID++;
-		heap.insert(node);
 
 	}
 

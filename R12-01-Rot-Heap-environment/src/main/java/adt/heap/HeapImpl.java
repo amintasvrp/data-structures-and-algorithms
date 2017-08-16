@@ -137,6 +137,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 		if (!isEmpty()) {
 			result = heap[0];
 			heap[0] = heap[index];
+			heap[index] = result;
 			index--;
 			heapify(0);
 		}
@@ -234,6 +235,18 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 			array[i] = list.get(i);
 		}
 		return array;
+	}
+	
+	public T[] heapSortMax(T[] array) {
+		T[] result = null;
+		if (array != null) {
+			buildHeap(array);
+			for (int i = 1; i < array.length; i++) {
+				extractRootElement();
+			}
+			result = array;
+		}
+		return result;
 	}
 
 }
