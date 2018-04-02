@@ -1,5 +1,3 @@
-# EDA
+# Roteiros_LEDA
 
-Roteiros de Estrutura de Dados e Algoritmos
-
-NAS FÉRIAS: Conferir implementações com os testes de @kaiokassiano
+Roteiros da disciplina de Laboratório de Estrutura de Dados e Algoritmos
