@@ -1,3 +1,3 @@
-# Roteiros_LEDA
+# LEDA_Scripts
 
-Roteiros da disciplina de Laboratório de Estrutura de Dados e Algoritmos
+Scripts resulting from the discipline of Laboratory of Data Structures and Algorithms.
