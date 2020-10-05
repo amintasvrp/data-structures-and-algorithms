@@ -1,5 +1,5 @@
-# LEDA Scripts
-Repository for scripts developed during the discipline of Laboratory of Data Structures and Algorithms.
+# Data Structures and Algorithms
+Implementation of data structures and sorting algorithms.
 
 ## Getting Started
 Clone the repository and run the application in a IDE with Maven support.
@@ -15,11 +15,6 @@ Use JUnity for testing.
 
 ## Contributing
 Make a pull request and make clear what changes have been made and which bugs persist. Do not introduce bugs, be proactive!
-
-## Contributors
-* **Amintas Victor** - *Initial work* - [GitHub](https://github.com/amintasvrp)
-
- If you contributed with this project, your name will be placed here. Welcome to the hall of fame :)
 
 ## Acknowledgments
 * Regular Java
