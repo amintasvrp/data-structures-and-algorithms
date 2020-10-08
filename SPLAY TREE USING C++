@@ -1,0 +1,144 @@
+#include<queue>
+#include<iostream>
+#include"node.h"
+
+
+template<class T>
+class splay_tree{
+private:
+ Node<T>* root=nullptr;
+
+public:
+   splay_tree(){
+       root=nullptr;
+   }
+ //gethead
+ Node<T>* gethead(){
+     return this->root;
+ }
+ //left rotate
+ void left_rotate(Node<T>* node){
+     if(node==nullptr){return ;}
+     else{
+         Node<T>* temp= node->m_right;
+         node->m_right=temp->m_left;
+         if(temp->m_left){
+             temp->m_left->m_parent=node;
+         }
+         temp->m_parent=node->m_parent;
+         if(node->m_parent==nullptr){
+             this->root=temp;
+         }else if(node==node->m_parent->m_left){
+             node->m_parent->m_left=temp;
+         }else if(node== node->m_parent->m_right){
+             node->m_parent->m_right=temp;
+         }
+         temp->m_left=node;
+         node->m_parent=temp;
+     }
+    
+ }
+void right_rotate(Node<T>* node){
+        Node<T>* temp=node->m_left;
+        node->m_left=temp->m_right;
+        if(temp->m_right){
+            temp->m_right->m_parent=node;
+        }
+        temp->m_parent= node->m_parent;
+        if(node->m_parent==nullptr){
+            this->root=temp;
+        }else if(node==node->m_parent->m_left){
+            node->m_parent->m_left=temp;
+        }else if(node== node->m_parent->m_right){
+            node->m_parent->m_right=temp;
+        }
+        temp->m_right=node;
+        node->m_parent=temp;
+   }
+
+ //splaying the node
+void splay(Node<T>* node){
+    while(node!=root){
+        if(node->m_parent->m_parent==nullptr){
+            if(node==node->m_parent->m_left){
+                right_rotate(node->m_parent);
+                return ;
+            }else if(node==node->m_parent->m_right){
+                left_rotate(node->m_parent);
+                return ;
+            }
+        }else if(node->m_parent->m_parent!=nullptr){
+            if(node==node->m_parent->m_left && node->m_parent==node->m_parent->m_parent->m_left){//leftleft case or zig zig
+                right_rotate(node->m_parent->m_parent);
+                right_rotate(node->m_parent);
+            }else if(node==node->m_parent->m_right && node->m_parent==node->m_parent->m_parent->m_right){//rightright case or zag zag
+                left_rotate(node->m_parent->m_parent);
+                left_rotate(node->m_parent);
+            }else if(node==node->m_parent->m_right && node->m_parent==node->m_parent->m_parent->m_left){
+                left_rotate(node->m_parent);
+                right_rotate(node->m_parent);
+            }else{
+                right_rotate(node->m_parent);
+                left_rotate(node->m_parent);
+            }
+        }
+    }
+}
+//level order traversal
+void level_order(){
+    if(this->root==nullptr){return ;}
+    else{
+        std::queue<Node<T>* > q;
+        q.push(this->root);
+        while(!q.empty()){
+            Node<T>* curr_ptr=q.front();
+            q.pop();
+            std::cout<<curr_ptr->m_data<<" ";
+            if(curr_ptr->m_left!=nullptr){
+                q.push(curr_ptr->m_left);
+            }
+            if(curr_ptr->m_right!=nullptr){
+                q.push(curr_ptr->m_right);
+            }
+        }
+
+    }
+}
+
+void insert(T data){
+    insert(data,this->root);
+}
+Node<T>* insert(T data,Node<T>* node){
+    
+    if(this->root==nullptr){
+        this->root= new Node<T>(data);
+        return this->root;
+    }else{
+        Node<T>* curr_ptr=node;
+            if(data<node->m_data){
+                if(node->m_left!=nullptr){
+                    node->m_left=insert(data,node->m_left);
+                }else{
+                    Node<T>* new_node = new Node<T>(data);
+                    curr_ptr->m_left= new_node;
+                    new_node->m_parent=curr_ptr;
+                    splay(new_node);
+                }
+                
+            }else if(data> node->m_data){
+                if(node->m_right!= nullptr){
+                    insert(data,node->m_right);
+                }else{
+                    Node<T>* new_node= new Node<T>(data);
+                    curr_ptr->m_right= new_node;
+                    new_node->m_parent=curr_ptr;
+                    splay(new_node);
+                }
+                
+            }
+
+        
+   }
+   return node;
+}
+};
