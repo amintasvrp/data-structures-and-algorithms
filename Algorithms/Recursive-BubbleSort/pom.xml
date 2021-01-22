@@ -3,10 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.edu.ufcg.ccc</groupId>
-	<artifactId>exercicio</artifactId>
+	<artifactId>Recursive-BubbleSort</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	
+	<name>Recursive-BubbleSort</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

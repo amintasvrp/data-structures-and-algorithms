@@ -3,10 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.edu.ufcg.ccc</groupId>
-	<artifactId>exercicio</artifactId>
+	<artifactId>Recursive-SelectionSort</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	
+	<name>Recursive-SelectionSort</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.java.algorithm</groupId>
-    <artifactId>postfix</artifactId>
+    <artifactId>Infix-To-Postfix</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>postfix</name>
+    <name>Infix To Postfix</name>
     <description>Java program that converts an expression in its infix form and transforms it to its postfix notation.</description>
 
     <properties>

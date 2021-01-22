@@ -18,7 +18,7 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
 			trocou = false;
 			for (int i = 0; i < length - gap; i++) {
 				if (array[leftIndex + i].compareTo(array[gap + i]) == 1) {
-					util.Util.swap(array, leftIndex + i, gap + i);
+					sorting.util.Util.swap(array, leftIndex + i, gap + i);
 					trocou = true;
 				}
 			}
