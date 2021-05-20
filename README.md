@@ -21,7 +21,5 @@ Use JUnity for testing.
 ## Contributing
 Make a pull request and make clear what changes have been made and which bugs persist. Do not introduce bugs, be proactive!
 
-## Acknowledgments
-* Regular Java
-* Knowledge about Data Structures and Algorithms
-* Willingness to learn, research and develop (no laziness!)
+### Licenses
+* **MIT License** - [*Ver detalhes*](./LICENSE.txt)
