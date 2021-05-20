@@ -18,7 +18,7 @@ Have Java installed on the machine and use an IDE with support for Maven.
 ### **Running the tests**
 Use JUnity for testing.
 
-## Contributing
+### Contributing
 Make a pull request and make clear what changes have been made and which bugs persist. Do not introduce bugs, be proactive!
 
 ### Licenses
